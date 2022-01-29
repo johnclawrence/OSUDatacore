@@ -2,6 +2,10 @@ import pandas as pd
 import multiprocessing as mp
 import re
 import os
+global dirname
+global filetar
+dirname = os.path.dirname(__file__)
+filetar='2016out'
 
 def pqi(df):
     #PQI
@@ -213,7 +217,7 @@ def pqi(df):
     df['Elix31']=df[dx].str.contains(Elix31, regex=True)
     x=mp.current_process()
     xx=x.name
-    filepath = 'D:\zzdx\zzdx_pqi_'+xx+'.csv'
+    filepath = os.path.join(dirname,filetar+ '_pqi_'+xx+'.csv')
     if os.path.exists(filepath):
         df.to_csv(filepath,chunksize=20000,mode='a', index=False, header=None)
     if not os.path.exists(filepath):
@@ -221,9 +225,8 @@ def pqi(df):
  
     
 if __name__ == '__main__':
-    dataset='D:\zzdx\zzdx.csv'
-
-    df = pd.read_csv(dataset, chunksize=20000)
+    dataset= os.path.join(dirname,filetar+ '.csv')
+    df = pd.read_csv(dataset, chunksize=200000 )
     
     pool = mp.Pool(processes = (mp.cpu_count()-1))
     for arg in df:
@@ -231,9 +234,19 @@ if __name__ == '__main__':
         #try: pqi(data)
         except:print(" Failed")
         print(".")
-
-    
     pool.close()
     pool.join()
-    print("end")
+    print("parse completed")
+    datasetout= os.path.join(dirname,filetar+ '_pqiall.csv')
+    for file in os.listdir(dirname):
+        if file[:11]==(filetar+"_pqi"):
+            print(file)
+            df=pd.read_csv(os.path.join(dirname,file))
+            if os.path.exists(datasetout):
+                df.to_csv(datasetout,chunksize=200000,mode='a', index=False, header=None)
+            if not os.path.exists(datasetout):
+                df.to_csv(datasetout,chunksize=200000,mode='w', index=False)
+            os.remove(os.path.join(dirname,file))
+            print(file+" combined")
+    print("combine complete")
     
