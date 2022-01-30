@@ -1,0 +1,11 @@
+%include "X:\HCUP\Datacore Supporting Files\NEDS Load\NEDS Load 2006.sas";
+%include "X:\HCUP\Datacore Supporting Files\NEDS Load\NEDS Load 2007.sas";
+%include "X:\HCUP\Datacore Supporting Files\NEDS Load\NEDS Load 2008.sas";
+%include "X:\HCUP\Datacore Supporting Files\NEDS Load\NEDS Load 2009.sas";
+%include "X:\HCUP\Datacore Supporting Files\NEDS Load\NEDS Load 2010.sas";
+%include "X:\HCUP\Datacore Supporting Files\NEDS Load\NEDS Load 2011.sas";
+%include "X:\HCUP\Datacore Supporting Files\NEDS Load\NEDS Load 2012.sas";
+%include "X:\HCUP\Datacore Supporting Files\NEDS Load\NEDS Load 2013.sas";
+%include "X:\HCUP\Datacore Supporting Files\NEDS Load\NEDS Load 2014.sas";
+%include "X:\HCUP\Datacore Supporting Files\NEDS Load\NEDS Load 2015.sas";
+%include "X:\HCUP\Datacore Supporting Files\NEDS Load\NEDS Load 2016.sas";
