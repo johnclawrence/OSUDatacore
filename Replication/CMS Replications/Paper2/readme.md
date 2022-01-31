@@ -358,5 +358,158 @@ How many ICU encounters do we have in 2015-2016.
         HF > 100 is 1395 2016 jan-sep (294248 cases)
 
 So I'm at the end of 1/30/22 right before I commit. I am doing the APR-DRG Transformation of 2017 to v36
+Start of 1/31/22
 
-Paper     430397 cases    270616 ICU visits    1374 Hospitals... Maybe I'm misunderstanding their numbers...
+So what do I want to figure out...
+    HF 2017             569150 cases
+    HF >100 2017        1785 hospitals
+    HF FY 2017          564832 cases
+    HF >100 FY 2017     1799 hospitals
+        2017 jan-sept   1483 hospitals
+        2016 oct-dec    276 hospitals
+    ICU >100 2017       3051 hospitals
+    ICU >100 FY2017     3055 hospitals
+        2017 jan-sept   2862 hospitals
+        2016 oct-dec    2003 hospitals
+    HFICU>100 2017      930 hospitals
+    HFICU>100 FY2017    926 hospitals
+100ICU and 100HF
+    2017                1779 hospitals  477183 cases
+    2017FY              1774 hospitals  472773
+        2017 jan-sept   1479 hospitals  330269 cases
+        2016 oct-dec    276 hospitals   
+    2016                1715 hospitals  
+        2016 jan-sept   1385 hospitals  292870 cases
+        2015 oct-dec    
+    2016FY              1702 hospitals  426408 cases
+
+So, here is more or less where I'm at, 
+    I know I'm not looking at clm_Fac_type_cd, PTNT_DSCHRG_STUS!=2 or CLM_PPS_IND_CD.. I've come this far, I might as well. 
+    FY2017              1703 Hospitals  444285 cases 229473 icu cases
+    FY2016              1638 Hospitals  399297 cases
+What I believe is that they seem to have some different way of determining hospitals than I do and that is likely causing everything else to cascade OR they did something wrong. The initial way that they describe their dataset still bothers me because they reference the medicare dataset by FY, which is not how the medicare datasets are organized. They retain hospitals that paid under IPPS, ignored patients with discharge 2 and 20, and looked only at hospitals, which are the 4 extra variables I filtered on. And they only looked at hospitals with... atleast 100ICU cases within the claims data... which the defined earlier as only containing heart failure visits. Which to me implies the HFICU case (the most restrictive case) So lets explore that most restrictive case again. Hospitals with 100 heartfailure ICU claims per year.
+
+ HFICU>100 and CLM_FAC_TYPE_CD=1 and PTNT_DSCHRG_STUS_CD!=2 and PTNT_DSCHRG_STUS_CD!=20 and CLM_PPS_IND_CD !=''
+    2016 FY         829 hospitals   172910 icu visits
+    2016            840 hospitals   177963 icu visits
+    2017 FY         883 hospitals   193759 icu visits
+    2017            903 hospitals   196710 icu visits
+    2017+2016q4     1053 hospitals  260002 icu visits
+
+So, what does this tell me... What I believe is the most likely thing if they have some other way of figuring out what hospital the charge was in. I'm able to get close to their ICU count, I'm able to get close to their claim count, I'm just not able to get close to their hospital count unless I do things that I believe would be incorrect. Yeah, that's really all I can figure out. Their methods are extremely clear, they call out almost everything... except for how they determine what a hospital is, and maybe my assumption of ORG_NPI is incorrect... it just feels like the only "hospital identifier" that I get. 
+So my org NPIs are certanly linking to corperations. Not hospitals. what npis do I get...
+I get the organization, attending, operating, other, and rendering...
+what are each of these things
+    Organizational  these are health systems it seems like 
+    attending       these are individuals
+    operating       these are individuals
+    other           these are individuals
+    rendering       these are individuals
+provider number... for some random sample I have 4208 orgnpis and 4240 provider numbers...
+400104
+Positions 1-2 are a GEO-SSA Code
+Positions 3-4 are category indicators
+Positions 4+ are serial numbers...
+Further more there are hospitals with a letter in position 3 that aren't in PPS
+So 12 are where
+34 are what
+and 56 are which...
+So I dont' use 12or56 to filter on hospital
+just 34... so I need to understand 34 but before I get into that, lets just turn off the brain for a moment and see how it looks when we use provnum rather than orgnpi
+
+
+Honestly it doesn't change much 
+    2017 HFICU case...      903-->898
+    2017 HF100 case...      1799-->1704
+    2017 ICU 100 / HF 100   -->1697 hospitals, 451317 cases... So honestly it's getting closer?
+    if I look at the fiscal years for icu100/hf100
+    FY 2017 1686 hosp 446210 cases
+    FY 2016 1491 hosp 341481 cases
+
+So, my number of cases is closer, forsure. but the average size of my hospital is just too large...
+and the HFICU 2017 cases reduced the number of hospitals, it didn't increase it... 
+
+So lets dig into the numbers again...
+Well, like, this certainly splits off stuff but it still doesn't break it down further. 
+OSU has atleast 3 hospitals, but they all seem to be the same provider number and npi...
+So NPI is too large
+To provider number smaller but is too large
+
+provider_npi is in appropiate...
+So maybe the identifier is in the revnue center file. 
+So I know rev_cntr is -which- revenue center in a hospital, but like... that does me no help as that's just a category list... Yep Nope. 
+I sent out a message to CCW to ask but I suspect that they're going to tell me there isn't any other way to break it down.
+So. Here is my plan then... I plan to just do my best and to try and get a statistical replication, now that I no longer believe that I can actually recreate their cohort after days of trying.
+
+So, lets start from the top
+Dev 09
+Step 1: The research team obtained financial year 2016 (FY2016) Medicare fee-for-service claims spanning October 1, 2015, through September 30, 2016. 
+    year	claim
+    2015	2757860
+    2016	8473922
+            11231782 
+
+Step 2: The team retained claims for hospitals paid under the IPPS and grouped claims under Version 36 of the All-Patient Refined Diagnosis-Related Group (APR-DRG) classification system.	
+    year	claim
+    2015	121415
+    2016	368349
+            489764 
+    
+Step 3: Cases identified as transfers (discharge disposition = 2) and flagged cases in which patients died (discharge disposition = 20) were excluded for subsequent analysis.
+    year	claim
+    2015	117671
+    2016	357231
+            474902 
+step 4: To identify patient admissions reported as receiving days in ICUs, the research team flagged a claim as ICU if any claim charges were made for a revenue center code listed in Supplementary Appendix 2.
+    year	icu	claim
+    2015	0	58790
+    2016	0	178569
+    2015	1	58881
+    2016	1	178662
+    2015    x   117671
+    2016    x   357231
+            1   237543
+            0   237359
+    That is bizzarly close to a 50-50 split. This is also the first piece of evidence that we have deviated with the paper, as even before we perform the 100 ICU filter we have fewer ICU cases than they do. 
+Step 5: To review variation in patterns of ICU designation across hospitals, the analysis was restricted to a single base DRG—APR-DRG 194 CHF(This was done in step 2) however because everything until this point is transitive it doesn't matter.
+
+Step 6: The analysis was further restricted to hospitals having at least 100 ICU cases within the claims data.
+    So THIS is the first decision point. I believe that they are refering to 100 icu cases within the claims data in this state. Not the initial dataset but the current dataset.
+    this restriction is by hospital (provider number according to CCW) and ICU cases (sumICU=1>=100 group by provider_number)
+    4143 providers total of which 834 providers have 100 or more HF ICU visuts per year with all previous criteria
+    year	icu	claim
+    2015	0	13951
+    2016	0	43413
+    2015	1	43186
+    2016	1	131790
+    icu     0   57364
+    icu     1   174976
+    2015        57137
+    2016        175203
+    total cases:232340    
+    So the final break down is...
+    Paper     430397 cases    270616 ICU visits    1374 Hospitals
+    My Cohort 232340 cases    174976 ICU visits    834  Hospitals
+    their % ICU is 62.9, my % ICU was 75.3
+
+So, On to figure 4. Figure 4 says 2017 claims data, but their cohort said 2016, so I'm going to just continue with my existing dataset as the numbers in their cohort are the same. 
+
+So for this figure I need
+    This figure also suggests that deaths were not excluded (as the text above did suggest) So I will be adding them back in now. This increases my number of hospitals by 1 (865 now)
+    year	icu	(No column name)
+    2015	0	15519
+    2015	1	45419
+    2016	0	48303
+    2016	1	138670
+    ended up being the final figure.
+
+    So for figure 4 I need 
+    Case Count (claimno,year)
+    LoS (los)
+    % died (death)
+    % high intensitive (dxall, prall)
+    And I need SOI (SOI)
+    and I need ICU (ICU) 
+    and I need hospital identifier for Figure 5 (PRVDR_NUM)
+Dev 11 has the final python code needed to build the dataset
+now all that's left is building the tables  in R. 
