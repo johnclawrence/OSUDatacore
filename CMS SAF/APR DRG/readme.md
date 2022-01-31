@@ -43,7 +43,7 @@ Here is how you do step 3.
 Step 1, you open the command line
 Step 2, you navigate (CD) to the folder that has the data you want to get DRGs for (as well as the other files from the zip)
 Step 3, you execute the following code
-testapr.exe aprlim.dll ..\gapr_v380.ctl ..\umap.ctl ..\testdata2.txt 0 > somepath/filename.txt | ThatSamesomepath/filename.txt
+testapr.exe aprlim.dll ..\gapr_v380.ctl ..\umap.ctl ..\testdata2.txt 0 > type somepath/filename.txt | ThatSamesomepath/filename.txt
 
 What you're doing before the > is executing the commandline operation
 What you're doing after the > is saving the output to the commandline to a text file.
@@ -51,3 +51,8 @@ I'm sure there is a better way to do this, but hey, it took me hours just to get
 
 But yeah, basically you're going to run that code for every file you need DRG for (mostly inpatient)
 There are some supporting files that I used when figuring this out, namely APRDRG Format Example.xlsx in the repo.  I think I can probably share the zip file as well so I will.  (Its the APRDRG_LIMITED_GROUPER_2021.zip file)
+
+
+
+Step 3 in action
+testapr.exe aprlim.dll ..\gapr_v380.ctl ..\umap.ctl ..\pre2015inpAPRDRGicd10.txt 0 > C:\Users\lsa-lawr47\Desktop\Paper2\APRDRG_LIMITED_GROUPER_2021\out2015inpAPRDRG.txt | type C:\Users\lsa-lawr47\Desktop\Paper2\APRDRG_LIMITED_GROUPER_2021\out2015inpAPRDRG.txt
