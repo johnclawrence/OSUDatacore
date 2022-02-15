@@ -1,0 +1,11 @@
+Association Between Postoperative Pneumonia and 90-Day Episode Payments and Outcomes Among Medicare Beneficiaries Undergoing Cardiac Surgery.
+
+So from the methods!
+For this retrospective cohort study, we used Medicare administrative claims data (data use agreement No. RSCH-2017-51285) 
+    Uh-Oh. That's an RIF DUA not an LDS DUA, so that's bad news if they are using something particulear about their dataset...
+for beneficiaries undergoing cardiac surgery who were enrolled in part A and part B coverage between April 2014 and March 2015, including inpatient facility, carrier (ie, physician services), short-term nursing facility (SNF), home health agency, outpatient facility, hospice care, durable medical equipment, and Medicare beneficiary summary data files. 
+    And dead. I don't have DME, so I can't reproduce this one... That said, I'm curious if it breaks beyond -just- that issue.
+Applying the BPCI Advanced approach to identify eligible episodes of care (ie, using Medicare severity diagnosis-related group codes [MS-DRG]), we identified 57 228 admissions for CABG (MS-DRG 231–236) and 71 681 admissions for valve surgery (MS-DRG 216–221, 266, 277). Within each procedure cohort, we excluded n=500 beneficiaries without an International Classification of Diseases (ICD)-9 code for CABG (36.10–36.19) and n=15 304 for valve surgery (35.20–35.28, 35.05, 35.06). 
+    Thats doable.
+The excessive exclusions in the valve surgery cohort were for nonsurgical valve-related procedures, such as balloon valvuloplasty or valve annuloplasty, which use the same MS-DRG codes. We note that we defined CABG and valve episodes based on administrative criteria, rather than clinical criteria (eg, Society of Thoracic Surgeons Adult Cardiac Surgery Database). Our final samples included n=56 728 CABG episodes and 56 377 valve surgery episodes.
+    Yeah, this is all fine... the issue isn't the RIF, the issue is DME. Basically no one uses the DME file so we never baught it because it's expensive. Oh well. 
