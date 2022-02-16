@@ -19,10 +19,6 @@ Paper-10#91     Hot spotting surgical patients undergoing hepatopancreatic proce
 Paper-15#1193   A Cost-Effectiveness Analysis Comparing Single-use and Traditional Negative Pressure Wound Therapy to Treat Chronic Venous and Diabetic Foot Ulcers.
                     This paper is using markov chains, and those are converging but not deterministic. 
                     This paper could be excluded because it is non-deterministic.            
-
-
-
-
 Paper-16#960    Association of Ambulatory Hemodynamic Monitoring of Heart Failure With Clinical Outcomes in a Concurrent Matched Cohort Analysis.
                     This paper uses CMS as a control, It's not a -good- candidate, but it's possible. 
                     This paper could be excluded because it references local EMR data.
