@@ -29,3 +29,9 @@ So lets start at the beginning,
 100% 2012 Medicare... but more than that, which sub files are they using... they say the initial file is 53,424,266, so we're talking about beneficiaries. 
 Instantly I realize... I don't have the 2012 denominator file loaded. So I need to fix that problem first. 
 
+2/17/22
+So paper 5 is the next paper that I am replicating!
+https://onlinelibrary.wiley.com/doi/10.1111/jan.13108
+    There is some full text, so lets actually go about building this dataset!
+    So, they give a break down, step by step
+    100% 2012 File
