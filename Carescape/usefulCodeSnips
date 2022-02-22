@@ -1,0 +1,4 @@
+ 
+ I'm using this to zip everything in an archive initially. It's not really efficiant and it's braindead, but it's what I'm using.
+
+ Get-ChildItem "." | ForEach-Object { Compress-Archive -path $_.Name -destinationPath "$($_.Name).zip"}
