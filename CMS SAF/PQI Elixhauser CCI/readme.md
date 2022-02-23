@@ -28,3 +28,11 @@ Step 2 Export the SQL code to a .csv file.
 Step 3 Execute the python code for that year on that csv file.
 Step 4 import the output file of that python code back to sql. 
 I'll explain broadly what's going on in Step 1 and 3 in those steps subfolders.
+
+
+2/22/22
+I'm comming back to this in order to do some recoding, I want to program the whole process in python rather than needing to run a SQL query to export it and then import it.
+I'm going to be doing a version that is ICD9 and a version that is ICD 10
+
+So this is all going to be in the folder "Version 2"
+I am also going to be breaking this down into 2 versions. 1 for PQI, 1 for CCI/ Elixhauser. Because CCI / Elixhauser don't change between years, but PQI does. Actually, No I'm not. That'd dumb. I'm going to just make a version for every year. 

@@ -95,3 +95,5 @@ Pop         Year
 45,724,204	15
 
 Next we need to get it narrowed down by diagnosis... So this is going to require some python regex.
+SO I've done a bunch of legwork to get CCI / Elix / PQI / readmission calculated for everything. Because the querys were becomming un-doable with memory limitations. So, now to figure out where I set this down.
+now I need mortality... Well this is kind of new, I've never worked with mortality stuff before.... Ah I get Date of Death from the denom1. 
