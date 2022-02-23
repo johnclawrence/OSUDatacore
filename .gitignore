@@ -128,3 +128,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 CMS SAF/PQI Elixhauser CCI/~$PQIRegexBuilder.xlsx
+.Rproj.user

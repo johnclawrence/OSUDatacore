@@ -94,6 +94,7 @@ Pop         Year
 44,270,400	14
 45,724,204	15
 
+<<<<<<< HEAD
 
 Next we need to get it narrowed down by diagnosis... So this is going to require some python regex.
 It looks like we're parsing like...25,901,427 claims
@@ -192,3 +193,9 @@ procedure (check, prall)
 A, B, HMO, Primary Payer (HI_coverage, SMI_coverage HMO_coverage NCH_PRMRY_PYR_CLM_PD_AMT)
 Wage index, obtained from Medicare cost reports, was used to remove the geographic influence in Medicare payment.
     This is CBSANumber. 
+
+
+Next we need to get it narrowed down by diagnosis... So this is going to require some python regex.
+SO I've done a bunch of legwork to get CCI / Elix / PQI / readmission calculated for everything. Because the querys were becomming un-doable with memory limitations. So, now to figure out where I set this down.
+now I need mortality... Well this is kind of new, I've never worked with mortality stuff before.... Ah I get Date of Death from the denom1. 
+
