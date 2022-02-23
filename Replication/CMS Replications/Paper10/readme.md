@@ -94,4 +94,101 @@ Pop         Year
 44,270,400	14
 45,724,204	15
 
+
 Next we need to get it narrowed down by diagnosis... So this is going to require some python regex.
+It looks like we're parsing like...25,901,427 claims
+
+DX starting with 525 526 527 5022 and 503
+soo....."\^+(?:525|526|527|5022|503)" is the regex key.
+
+And after that I get to 55459 claims.  (see dev01.py)
+
+Great! NOw lets compare my results to theirs....
+They say n=562 is 2.2% and n=65 = 0.3%
+n65 implies 21667 is the population
+n562 implies 25545..
+so maybe I have some duplicates, and I have some new variables, so back into SQL. 
+So when I look at distinct desy sort keys I'm looking at 51485 distinct people, 52318 people-years. 
+It begins, the divergence, lol. 
+
+Patients with a preoperative length of stay >1 day (n = 562, 2.2%) and patients who had no information regarding the discharge date (n = 65, 0.3%) were excluded... Okay, so I needed claim number probably. SO lets go back and redo the previous step with claim number. 
+So 55559 is where we're at with descrict people,claim,years. NOW, lets go in and do their limitations... Dev02 and 03.
+
+Preoperative los > 1 day, and no discharge date. 
+So basically when Day in - day out is greater than 1.
+CLM_ADMSN_DT is when they get there
+NCH_BENE_DSCHRG_DT is when they leave.
+
+So.... that can't be right because that reduces the number down to 4439, which is too low. 
+So they say "preoperative lengnth of stay" So... How do we define preoperative.  It's not a revenue center...
+Well, I could see when the operation was by using the revenue file. They probably have a charge, so that'll be any revenue center starting with 036 for operating room services...
+So lets add that in Dev04.
+
+Dev04 is going to get us all of the surgery rows I guess... 
+Well, Now I'm too low. 17693 if I just look at those claims with some sort of surgical charge....
+so I don't know how they did it then. 
+
+Well, lets take a step back now!
+Patients who were enrolled in Medicare Part A and Part B, had no additional payments from a health maintenance organization (HMO), and had no record of payment made by a primary payer were selected., I must have missed that. So Lets see how that affects our simplier patient population. 
+
+So, lets break these down 1 at a time. Dev06
+
+Enrolled in A and B
+We're looking for HI_Coverage
+SMI_Coverage
+
+No additional payments from a HMO
+HMO_Coverage = 0
+
+Payment made by a primary payer... well lets see where this gets us just here
+Well that gets me to 39533 claims. That's not awful.
+
+And it was at this moment, I realized that the paper is talking about procedure ICD-9 codes and not diagnosis codes. 
+
+So, lets jsut start at the high end and make our way down.
+
+Age Range 25226, well that's a slam dunk in the range, lol. 
+
+A+B Coverage and HMO no coverage.
+
+19974!
+
+And finally with [CLM_THRU_DT]=0 (which I think is rather fake) Lets see how that changes things. 
+
+19709, so that knocks out a few hundred. 
+
+So, next lets remove those where the discharge date is null. 
+
+That takes us down to 19652
+si that's 57 vs their 63 so that's fairly close... and their pre-operative length of stay >1 day... I can't figure that out, But that's pretty small so I'm going to move on.
+
+
+High Cost Patients... 
+So they're splitting into 4 hroups as per that table. Easy enough... I'll just add 4 variables. 
+And then they look at the spending, Okay I'll add the cost variable. 
+
+Next they're looking at re-hospitalization. age, sex, race/ethnicity, procedure year, CCI, and hospitalization. 
+
+Okay. 
+So I am going to figure out the next hospitalization for a patient and then add all those other variables...
+I am also going to implement CCI for ICD9 codes. 
+
+So, AGe,cSex, Race, Ethnicity, DX for CCI are all good. I need... [PRVDR_NUM] for hospital...  And last I need time to next hospitalization... Which I did for paper 1 I think, I just need to dig up that code. 
+
+datediff("D",convert(date,convert(char(8),a.[CLM_THRU_DT])),min(convert(date,convert(char(8),c.CLM_ADMSN_DT)))) as daysdiff
+
+and 
+
+left outer join inoutED as c on a.DESY_SORT_KEY=c.DESY_SORT_KEY and convert(date,convert(char(8),c.CLM_ADMSN_DT))>=convert(date,convert(char(8),a.[CLM_THRU_DT]))and a.Claim_No!=c.Claim_No
+
+
+So, let me start from the top of the paper and make sure I have all the variables now that I'm on the right planet.
+I need 
+unique person (desy_sort_key)
+unique claim (claim_no)
+age (Check age)
+year (check reference year)
+procedure (check, prall)
+A, B, HMO, Primary Payer (HI_coverage, SMI_coverage HMO_coverage NCH_PRMRY_PYR_CLM_PD_AMT)
+Wage index, obtained from Medicare cost reports, was used to remove the geographic influence in Medicare payment.
+    This is CBSANumber. 
