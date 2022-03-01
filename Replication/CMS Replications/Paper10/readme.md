@@ -64,7 +64,7 @@ Total patients were divided into four groups based on procedure types and comple
     Interesting. Okay, So and now here at the end we're grouping by "Institution" 
 
     Well Time to start slapping this togeather in dev 1
-    -----
+
 Medicare patients aged 65–100 years who underwent elective surgical procedures of the liver and pancreas. Patients undergoing surgery between the years 2013 and 2015 were included. Patients with the International Classification of Diseases, 9th Revision (ICD-9) procedure codes for proximal pancreatectomy (5251), distal pancreatectomy (5252), radical subtotal pancreatectomy (5253), other partial pancreatectomy (5259), total pancreatectomy (526), radical pancreatoduodenectomy (527), partial hepatectomy (5022), and hepatic lobectomy (503) were included.
 
 So Lets break it down by year
@@ -192,10 +192,11 @@ year (check reference year)
 procedure (check, prall)
 A, B, HMO, Primary Payer (HI_coverage, SMI_coverage HMO_coverage NCH_PRMRY_PYR_CLM_PD_AMT)
 Wage index, obtained from Medicare cost reports, was used to remove the geographic influence in Medicare payment.
-    This is CBSANumber. 
+    This is done by linking to the WI tables that I just created. 
 
 
-Next we need to get it narrowed down by diagnosis... So this is going to require some python regex.
-SO I've done a bunch of legwork to get CCI / Elix / PQI / readmission calculated for everything. Because the querys were becomming un-doable with memory limitations. So, now to figure out where I set this down.
-now I need mortality... Well this is kind of new, I've never worked with mortality stuff before.... Ah I get Date of Death from the denom1. 
-
+secondary outcomes of the analysis were perioperative clinical outcomes. Okay. 
+Coplicates and stuff  came from diagnosistic and procedure codes (done)
+LOS comes from admi / through dates
+Date of death comes from date or death
+readmission comes from that table 
