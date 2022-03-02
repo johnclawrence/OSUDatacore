@@ -1,58 +1,53 @@
-This folder is all about how you calculate a APR/DRG code from medical claims data. 
+DRG / APR-DRG
+This folder details a process to generate APR-DRG codes for an inpatient claim of the CMS SAF.
+DRG’s are Diagnosis Related Groupers. As the name suggests, DRGs represents patients with similar disease states. A difference between DRG and say PQI is all claims about heart failure will be classified under PQI08 but only cases that are predominantly about heart failure will have a heart failure DRG as a given claim only has one DRG code assigned to it. DRG codes are useful because they are a quick way to determine if a particular claim is about a disease state. 
 
-What is a DRG code?
-    A DRG code is a diagnosis related grouper. It baiscally represents a group of simliar diagnosis. For example, Heart Failure, Heart failure a bunch of ICD-10 codes but can be represented by 1 or a few DRG codes.
+Something else that differentiates DRGs from PQI or CCI is that PQI/CCI are based primarily on diagnoses codes with some minor use of procedure codes. DRG codes are also based on diagnosis codes, procedure codes, as well as other patient demographics such as age or ventilator days. 
 
-Why do I care about DRG codes?
-    DRG codes are a quick way to identify groups of patients. This matters mostly because insurance companies have a general amount of money that they expect to pay for a particulear DRG code. This is kind of like CCI or elixhauser, but based on more than just diagnoses. 
+In addition to the predominate condition of a claim, DRG codes also talk about the degree of severity.
 
-How many types of DRG codes are there?
-As it turns out, a bunch. But, as a broad simplification, in the united states, 2 are used.
-1 are MS-DGR codes, these are the DRG codes that CMS uses to talk about their patients, and it broadly breaks down into 3 different codes:
-    1 for the DRG without complications
-    1 for the DRG with minor complications
-    1 for the DRG with major complications
-    There are broadly outlined as part of IPPS and if you care to learn more about it here is a link https://www.cms.gov/Medicare/Medicare-Fee-for-Service-Payment/AcuteInpatientPPS/MS-DRG-Classifications-and-Software
+There are several flavors of DRG codes. The two that I will be discussing here are MS-DRG and APR-DRG.
 
-2 are APR-DRG codes, these codes are what everyone else uses. This is a code set built by 3M, everyone uses it, the documentation on this is sparse and arcane, and the algorithem is updated every year. As far as I can tell, every hospital just has a license with 3M and a magic box / calculator that they input a bunch of variables into and it spits out the APR-DRG.
+MS-DRG is CMS’s version of the DRG system and they are included by default in the SAF. The defining characteristic of MS-DRG is they break a given DRG into three levels
+The DRG without complications
+The DRG with minor complications
+The DRG with major complications
+The specifics of these codes are outlines here: https://www.cms.gov/Medicare/Medicare-Fee-for-Service-Payment/AcuteInpatientPPS/MS-DRG-Classifications-and-Software
 
-The APR-DRG has 3 components
-    1 a DRG code (the APR-DRG code, or, generally this is what everyone that isn't CMS calls a DRG code)
-    2 a SOI code (on a scale from 1-4 what is the severity of a particulear illness, 4 is not equally bad, for example having a SOI of 4 for a broken arm is not equivalent to having a SOI of 4 for a stroke)
-    3 a ROM code (On a scale from 1-4 what is the risk of mortality, I haven't used this one yet and I'm sure when I do I'll update 
-    this documentation)
+The most commonly used version of DRG codes are known as APR-DRG codes because they are used broadly by insurers to talk about how much a hospital visit should cost. APR-DRG is a codeset built by 3M. The documentation of how APR-DRG works is sparse and arcane. AHRQ / 3M have a description of the algorithm but it isn’t nearly enough to reproduce it. How APR-DRG codes are normally defined is by using software licensed by 3m. AHRQ has a public use version of this algorithm for some DRGs related to their metrics and that was what I used.
 
-Figuring out how to calculate a DRG code money without giving 3M money is basically impossible as far as I can tell... However AHRQ has a limited set of DRG codes in a public license from 3M, so we're going to use those. 
+The APR-DRG code has 3 components
+1: The diagnosis part of the DRG code (heart failure, for example)
+2: A Severity of Illness (SOI) code. SOI is a scale from 1-4 that describes the severity of a particular illness. For example, an SOI of 4 for a broken arm is not equivalent to having a SOI of 4 for a stroke
+3: A Risk of Mortality (ROM) code is on a scale from 1-4 what is the risk of mortality. I don’t totally understand this stuff yet, so I’ll come back to this later. 
 
-https://qualityindicators.ahrq.gov/Software/SAS.aspx is where you get the free stuff. 
+The AHRQ public license for APR DRG can be found here: https://qualityindicators.ahrq.gov/Software/SAS.aspx . There are many versions of it, I will be coding a particular year of data with the APR-DRG version that was new when the dataset was released. 
 
-We're going to get APR-DRGs for our dataset (where possible) through the following process
+The process of generating APR-DRG codes for the CMS SAF is: 
 
-Step 1: Modify the CMS dataset in SQL to match what we need the input to be
+Step 1: Create a SQL query to build a table with the inputs required by the APR-DRG coding program.
 Step 2: Export the dataset to flat files
-Step 3: Run the test.exe script in the zip file
-Step 4: parse the results of that test script in python
-Step 5: upload the parsed results into SQL
+Step 3: Run the test.exe script contained in the public file and write the results to a flat file.
+Step 4: Parse the results of that test script in python to define DRG, SOI, and ROM for each claim.
+Step 5: Upload the parsed results into SQL
 
-I am going to provide code for step 1 and 4 in their own folders
-Step 2 and 5 are straightforward. 
-Step 3 is arcane computer magic. 
+Step 1 is detailed in the Step 1 folder.
+Step 2 is a SQL export
+Step 3 is described below.
+Step 4 is in the Step 4 folder.
+Step 5 is a SQL import. 
 
 Here is how you do step 3. 
 
-Step 1, you open the command line
-Step 2, you navigate (CD) to the folder that has the data you want to get DRGs for (as well as the other files from the zip)
-Step 3, you execute the following code
+Step 1, unzip the file provided by AHRQ.
+Step 2, move the file exported in step to that folder. 
+Step 3, open the command line in that folder
+Step 4, Execute the following code with the relative path to the following files (for example here is my code)
 testapr.exe aprlim.dll ..\gapr_v380.ctl ..\umap.ctl ..\testdata2.txt 0 > type somepath/filename.txt | ThatSamesomepath/filename.txt
 
-What you're doing before the > is executing the commandline operation
-What you're doing after the > is saving the output to the commandline to a text file.
-I'm sure there is a better way to do this, but hey, it took me hours just to get this far. 
+This code has two components, split by a “>” before the > executes the code, after the > saves the output. 
 
-But yeah, basically you're going to run that code for every file you need DRG for (mostly inpatient)
-There are some supporting files that I used when figuring this out, namely APRDRG Format Example.xlsx in the repo.  I think I can probably share the zip file as well so I will.  (Its the APRDRG_LIMITED_GROUPER_2021.zip file)
-
-
-
-Step 3 in action
+Step 3 example code
 testapr.exe aprlim.dll ..\gapr_v380.ctl ..\umap.ctl ..\pre2015inpAPRDRGicd10.txt 0 > C:\Users\lsa-lawr47\Desktop\Paper2\APRDRG_LIMITED_GROUPER_2021\out2015inpAPRDRG.txt | type C:\Users\lsa-lawr47\Desktop\Paper2\APRDRG_LIMITED_GROUPER_2021\out2015inpAPRDRG.txt
+
+
