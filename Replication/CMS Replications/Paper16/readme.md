@@ -57,3 +57,59 @@ In the treatment cohort, we identified preimplant HF events as those for which a
     Okay...
 In the control cohort, we counted all HF events in which an HF diagnosis code was the primary reason for hospitalization to ensure that this cohort included only patients who met the approved indication (namely, an HF hospitalization in the preceding 12 months). For both treatment and control cohorts, all other hospitalizations that did not have a HF diagnosis were classified as non-HF events.
     So I don't see a reason why I can't do this. So I've got that going for me. 
+
+
+
+2/24/22
+So, lets start from the top
+Treatment Cohort
+    for inpatient Procedure codes ICD-9 = 38.26, ICD-10-CM 02HQ30Z or 02HR30Z
+    for outpatient  CPT C9741 or C2624
+From June 1st 2014-March 31st 2016
+12 months of A and B, before and after. (Referencing denominator file)
+No HMO files either. 
+
+Matched Control
+1 HF Hospitalization between July 1 2013 and March 31st 2016
+    (Should be ~1.5M)
+
+
+Now, what data is actually needed?
+Basically the whole PQI / CCI / ELX table
+Sex (MBSF)
+Gender (MBSF)
+Age (MBSF)
+End Stage Renal (MBSF)
+Comorbidities
+
+History of defibulator or cardiac resync therapy... (Hmmmm)
+Number of Hospitalizations, Number HF Hospitalizations
+LOS and total LOS
+
+
+So... all that's missing is like 
+(history of implantable cardioverter defibrillator or cardiac resynchronization therapy implant)
+
+Ultimately we're matching between patients so it's like... I want to make a universal list of patients with information around these anchor points...
+It's sort of an odd way of thinking about this... it's actualyl a really interesting way of thinking about the SQL aspect of this problem...
+
+Step 1
+    I need to make a table that contains multiple years of MBSF data.
+    Actually I think what I need to do is just say, for every bene, when their coverage starts and stops. (Dev01)
+
+Step 2
+    I need to identify all patients with the implant codes starting June 1st 2013 - March 31st 2016. (Dev02)
+    So.. They identified 1451 patients. I identify 417. Welp. 
+
+Step 3
+    Find their HF Cohort.
+    It is not exactly PQI PQI08. But it is fully contained by PQI08. Thank god. So once that's implemented I can perform that filter (In progress)
+
+Step 4
+
+
+Also Step 0, I need PQI/Elix/CCI for 2013-2016
+I have 13, and 14 just fine.
+I have 16 too.
+I need to re-do 15 to account for ICD9 and ICD10.
+This means I need new regex for 15. 

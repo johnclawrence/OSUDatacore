@@ -1,38 +1,27 @@
-This folder is all about how to figure out the PQI, Elixhauser, and CCI score for your dataset.
-Initially I ran this process when I needed it, but these numbers are referenced so often that I decided to just generate it once and just use this table forever more. 
+This document details information on calculating PQI, CCI and Elixhauser for a claim in the CMS SAF. 
 
-So first a little about each of these
+What are CCI, Elixhauser and PQIs?
 
-Elixhauser / CCI
-https://pubmed.ncbi.nlm.nih.gov/16224307/
-Coding algorithms for defining comorbidities in ICD-9-CM and ICD-10 administrative data by Quan is just how this is done.
-Yes, there are newer ways to do these things and lots of different flavours of these things... But...
-When people reference CCI and Elixhauser in the literature, THIS is how they talk about generateding them
+CCI (Charlson Co-morbidity Index) is a score that talks about the degree that a person’s co- morbidity are impacting their health outcomes. Typically, this is measured in groups below 5 and 5+ (So either 0,1,2,3,4,5+, or 0-2,2-4,5+). CCI is a scoring system where having a diagnosis in a certain group awards points, for example myocardial infarction would award one point, Diabetes with chronic complications would award 2 points, and metastatic solid tumor cancer would award 6. I commonly see this as a quick way to control for patient “health”.
 
-At a very high level CCI (Charlson Co-morbidity Index) is a score that talks about how awful someones co-morbidities are, generally this is mesasured as 0 to 5+, meaning if you're at 0 you don't have any major co-morbidities, and if you're at 5+ you have, you're in bad shape.
+Elixhauser and PQI are both category assignment indicators. In bothcases diagnosis (and sometimes procedure) is used to determine if someone falls into a particular category. Elixhauser outlines 31 commonly referenced co-morbidities, and PQI defined ambulatory care sensitive conditions (ACSCs). 
 
-Elixhauser just breaks down what each of the co-morbidities is and states if someone has one (of which there are 31)
-
-PQI
+PQI is defined by AHRQ and changes annually. For this dataset, all ICD 9 codes (claims before October 1st 2015) were assigned base on the final ICD-9 PQI mapping. ICD-10 mappings were defined by the PQI for the year that they were released. PQIs and ACSCs are commonly used to talk about preventable conditions that can get out of control. 
 https://qualityindicators.ahrq.gov/modules/pqi_resources.aspx#techspecs
-PQIs are just ways of talking about ambulatory care sensitive conditions (ACSC) which is the broad list conditions that become bad but were probably preventable. 
-
-These change every year-ish, so for a given year, when people talk about PQIs, I use the PQI dataset that came out that year because that's how that particulear PQI was defined at that time.
 https://qualityindicators.ahrq.gov/Archive/
 
-However, here is the big inconsistency. For ALL ICD-9 codes, I use Version 6.0 PQI. The reason I do this is because it's the "end" of how icd-9 PQIs were defined so it's possible to have an apples to apples comparison of PQIs historically because it's unchanging now.  When I think about why I did this, I didn't want to go back and update this variable for all datasets every year because I wanted it to remain static going forward, hence I change ICD-10 every year but keep ICD-9 static. 
+Elixhauser and CCI were all defined by the mappings in Quan https://pubmed.ncbi.nlm.nih.gov/16224307/
+This is because this version is by far the most referenced version of CCI and elixhauser and when people refer to CCI and elixhauser they basically always are referring to this paper.  
 
-Here is how I do this process 
-Step 1 Execute the SQL code. This generates a SQL table that is used by the transformation
-Step 2 Export the SQL code to a .csv file.
-Step 3 Execute the python code for that year on that csv file.
-Step 4 import the output file of that python code back to sql. 
-I'll explain broadly what's going on in Step 1 and 3 in those steps subfolders.
+PQI, CCI, and Elixhauser are all calculated at the same time because they all use the same variables so calculating PQI is most of the way to calculating a CCI as well. These variables are calculated by python code that does the following:
+ 
+Step 1 Get the primary key, diagnosis codes and procedure code for all claims in a SQL table.
+Step 2 Download the file to the local disk.
+Step 3 For each claim execute regular expressions to determine what categories the claim fits into.
+Step 4 export this updated file to flat file.
+Step 5 upload the flat file to SQL. 
 
-
-2/22/22
-I'm comming back to this in order to do some recoding, I want to program the whole process in python rather than needing to run a SQL query to export it and then import it.
-I'm going to be doing a version that is ICD9 and a version that is ICD 10
-
-So this is all going to be in the folder "Version 2"
-I am also going to be breaking this down into 2 versions. 1 for PQI, 1 for CCI/ Elixhauser. Because CCI / Elixhauser don't change between years, but PQI does. Actually, No I'm not. That'd dumb. I'm going to just make a version for every year. 
+A few notes:
+1, this code writes to disk because the files get quite large and cannot be held in memory.
+2, this process is performed in parallel
+3, the pre 2012-2015 years run use ICD-9 and 10 codes because there is some variable coding. 

@@ -1,4 +1,4 @@
-The Goal of this Dictionary and Sample is to provide a sample of what the Carescape dataset looks like.
+The Goal of this Dictionary and Sample is to provide a sample of what the carescape dataset looks like.
 
 Terms:
 CSN = contact serial number, it's the unique identifier for a patient visit.
@@ -17,18 +17,18 @@ Waveform
 
 From the EMR
 Allergy
-    Every Row of this table is an allergy and a rection
+    Every Row of this table is an alergy and a rection
 Base Pop
     Every Row of this table is a hospital admission / Discharge.
 Demographics
-    Every Row of this table are demographics
+    Every Row of this tabke are demographics
 Flowsheets
     Every Row of this table are the results of a flowsheet row.
 ICU
     Every Row of this table is an ICU ADT
 LAB_Orders
     Every Row of this table is a lab order and its result
-Location
+Loaction
     Every Row are the ADTs
 Medication
     Every Row is a medication Order
@@ -37,8 +37,9 @@ Orders
 Social_Hx
     Every Row is Tobacco / Alcohol use for a patient
 
-As a more in depth data dictionary
-Common Variable
+
+As a more indepth data dictionary
+Common Variabled
 hashMRN This is the Hashed MRN, This is the consistent patient identifier between tables.
 PAT_ENC_CSN_ID This is the Contact Serial Number that is the unique identifier for an ambulatory encounter or hospital encounter.
 INPATIENT_DATA_ID This is the unique identifier for the inpatient hospital visit
@@ -46,10 +47,10 @@ All dates in this dataset have been modified by up to 14 days and date modificat
 
 Measurement Name
 hashedMRN
-pollTime            When the measurement is gathered
+pollTime            When the measrurement is gathered
 mesname             The name of the device recording the measurement
 msite               the site of that measurement 
-muom                the unit of measure for that measurement
+muom                the unit of measure for that measturement
 mtext               the value of that measurement
 
 Alarm   The name of the file contains the hashedMSN, the Location, and the Date
@@ -57,7 +58,7 @@ hashedMRN
 pollTime            When the alarm is being sent
 abnormalFlags       What is the type of the alarm (ECG-Rythem-Artifact, numLimit-mean-High Central Venous, etc)
 inactivation-state  A, PN, SP, ST, I don't know what these mean.
-sil                 I don't know what this means
+sil                 I don't know what tis means
 setlow              Lower Bound of range
 sethi               Upper Bound of range
 chan-value          value that's causing the alarm
@@ -83,7 +84,7 @@ mgOffset            instrument offset
 Table:  Allergy
     hashMRN
     PAT_ENC_CSN_ID
-    Allergy                 This is a particular drug or class of chemicals (Sulfa Antibiotics, Amoxicilin, KDC)
+    Allergy                 This is a particulear drug or class of chemicals (Sulfa Antibiotics, Amoxicilin, KDC)
     Allergy_Reaction        This is a string description
 Table: Base_Pop
     PAT_ENC_CSN_ID
@@ -107,7 +108,7 @@ Table: Demographics
     Age_June1               Age as of June1 before Encounter
     Marital_Status          Marital status as of the encounter (Married, Single, Widowed)
     Patient_Race            Patient Race (White, Black, Asian, Other, This field is multi-select)
-    Ethnicity               Hispanic/Latino or Not
+    Ethnicity               Hisptanic/Latino or Not
     Preferred_Language      English, Spanish, etc.
     ABO_RH_Blood_Type       This field is free text, so, for example, this could be OPOS, O POS, O POSITIVE, OPOSITIVE you get the the idea.
 Table: Flowsheets
@@ -137,13 +138,13 @@ Table: Lab_Orders
     hashMRN
     Order_type              This is always Lab
     DESCRIPTION             This is the plain Text name of the lab
-    PROC_ID                 This is the programmatic procedure ID for the lab
+    PROC_ID                 This is the programatic procedure ID for the lab
     COMPONENT_NAME          This is the name of the component of that lab (A given lab might have multiple components)
     ORDER_STATUS_C          This is the order status category Value
     order_status            This is the plaintext version of that category value
     ORDERING_DATE           When the lab was ordered
     RESULT_DATE             When the lab was resulted
-    ORD_NUM_VALUE           The numeric result of the lab
+    ORD_NUM_VALUE           The numberic result of the lab
     ORD_VALUE               The text result of the lab (also a number of the lab returns a number)
     COMPONENT_COMMENT       Comment on the lab (I don't see abnormal, this looks like it's a comment left by the lab tech like "Slightly hemolyzed")
     Ordering_CSN            CSN when the lab was ordered
@@ -167,7 +168,7 @@ Table: Medications
     hashMRN
     MEDICATION              Plaintext Name of the medication
     ORDERING_DATE           Date the medication was ordered
-    START_DATE              Datetime the medication was administered
+    START_DATE              Datetime the medication was adminstered
     END_DATE                Datetime the medication was stopped
     ORDERING_MODE           Where the administration happened
     HV_DISCRETE_DOSE        The dose of the medication
@@ -188,7 +189,7 @@ Table: Orders
     ORDER_STATUS_C          Category List Status for the order
     order_status            Plaintext version of that category list
     ORDERING_DATE           When the order was ordered
-    RESULT_DATE             When the order occurred
+    RESULT_DATE             When the order occured
     ORD_NUM_VALUE           The numerical result of that order
     ORD_VALUE               The plaintext result of that order (such as A POS for a blood type text)
     COMPONENT_COMMENT       The comment on that order
@@ -200,7 +201,7 @@ Table: Social_Hx
     TOBACCO_USER_C          I don't have the definition of this category list
     SMOKING_TOB_USE_C       I don't have the definition of this category list
     SMOKING_START_DATE      Date when the patient started smoking
-    SMOKING_QUIT_DATE       Date when the patient stopped smoking 
+    SMOKING_QUIT_DATE       Date when the patient stopped amoking 
     CIGARETTES_YN           Do they smoke cigarettes, Y/N
     PIPES_YN                Do they smoke pipes Y/N
     CIGARS_YN               Do they smoke Cigars Y/N
@@ -216,11 +217,10 @@ Table: Social_Hx
     ALCOHOL_FREQ_C          I don't have the definition of this category list
     ALCOHOL_DRINKS_PER_DAY_CI don't have the definition of this category list
     ALCOHOL_BINGE_C         I don't have the definition of this category list
-    ALCOHOL_OZ_PER_WK       How many ounces of alcohol per week
+    ALCOHOL_OZ_PER_WK       How many ounces of alcogol per week
     ALCOHOL_COMMENT         Comment left by provider
     DRUG_SRC_C              I don't have the definition of this category list
     IV_DRUG_USER_YN         I don't have the definition of this category list
     ILL_DRUG_USER_C         I don't have the definition of this category list
     ILLICIT_DRUG_FREQ       I don't have the definition of this category list
     ILLICIT_DRUG_CMT        Comment left by provider
-
