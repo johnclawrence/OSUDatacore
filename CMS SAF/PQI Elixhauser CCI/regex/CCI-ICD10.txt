@@ -1,0 +1,35 @@
+    #CCIi10
+    #Myocardial infarction 1 DC
+    CCIi1001=re.compile("\^+(?:i21|i22|i252)",re.IGNORECASE)
+    #Congestive heart failure 1 DC
+    CCIi1002=re.compile("\^+(?:i099|i110|i130|i132|i255|i420|i425|i426|i427|i428|i429|i43|i50|P290)",re.IGNORECASE)
+    #Preipheral vascular disease 1 DC
+    CCIi1003=re.compile("\^+(?:i70|i71|i731|i738|i739|i771|i790|i792|K551|K558|K559|Z958|Z959)",re.IGNORECASE)
+    #Cerebrovascular disease 1 DC
+    CCIi1004=re.compile("\^+(?:g45|g46|h340|I6)",re.IGNORECASE)
+    #Dementia 1 DC
+    CCIi1005=re.compile("\^+(?:F00|F01|F02|F03|F051|g30|G311)",re.IGNORECASE) 
+    #Chronic pulmonary disease 1 DC
+    CCIi1006=re.compile("\^+(?:i278|i279|J40|J41|J42|J43|J44|J45|J46|J47|J60|J61|J62|J63|J64|J65|J66|J67|J684|J701|J703)",re.IGNORECASE)
+    #Rheuamatic disease 1 DC
+    CCIi1007=re.compile("\^+(?:M05|M06|M315|M32|M33|M34|M351|M353|M360)",re.IGNORECASE)
+    #Peptic ulcer disease 1 DC
+    CCIi1008=re.compile("\^+(?:K25|K26|K27|K28)",re.IGNORECASE)
+    #Mild liver disease 1 DC
+    CCIi1009=re.compile("\^+(?:B18|K700|K701|K702|K703|K709|K713|K714|K715|K717|K73|K74|K760|K762|K763|K764|K768|K769|Z944)",re.IGNORECASE)
+    #Diabetes w/o chronic complications 1 DC
+    CCIi1010=re.compile("\^+(?:E100|E101|E106|E108|E109|E110|E111|E116|E118|E119|E120|E121|E126|E128|E129|E130|E131|E136|E138|E139|E140|E141|E146|E148|E149)",re.IGNORECASE)
+    #Diabetes /w chronic complications 2 DC
+    CCIi1011=re.compile("\^+(?:E102|E103|E104|E105|E107|E112|E113|E114|E115|E117|E122|E123|E124|E125|E127|E132|E133|E134|E135|E137|E142|E143|E144|E145|E147)",re.IGNORECASE)
+    #Hemiplegia or paraplegia 2 DC
+    CCIi1012=re.compile("\^+(?:G041|G114|G801|G802|G81|G82|G830|G831|G832|G833|G834|G839)",re.IGNORECASE)
+    #Renal disease 2 DC
+    CCIi1013=re.compile("\^+(?:i120|i131|N032|N033|N034|N035|N036|N037|N052|N053|N054|N055|N056|N057|N18|N19|N250|Z490|Z491|Z492|Z940|Z992)",re.IGNORECASE)
+    #Any Malignacy 2 DC
+    CCIi1014=re.compile("\^+(?:C0|C1|C20|C21|C22|C23|C24|C25|C26|C30|C31|C32|C33|C34|C37|C38|C39|C40|C41|C43|C45|C46|C47|C48|C49|C50|C51|C52|C53|C54|C55|C56|C57|C58|C6|C70|C71|C72|C73|C74|C75|C76|C81|C82|C83|C84|C85|C88|C90|C91|C92|C93|C94|C95|C96|C97)",re.IGNORECASE)
+    #Moderate or severe liver disease 3 DC
+    CCIi1015=re.compile("\^+(?:i850|i859|i864|i982|K704|K711|K721|K729|K765|K766|K767)",re.IGNORECASE)
+    #Metastatic solid tumor 6
+    CCIi1016=re.compile("\^+(?:C77|C78|C79|C80)",re.IGNORECASE)
+    #AIDS/HIV 6
+    CCIi1017=re.compile("\^+(?:B20|B21|B22|B24)",re.IGNORECASE)

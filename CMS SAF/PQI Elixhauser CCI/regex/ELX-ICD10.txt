@@ -1,0 +1,63 @@
+    #Elixhauser DC
+    #congestive heart failure DC
+    ELXi1001=re.compile("\^+(?:i099|i110|i130|i132|i255|i420|i425|i426|i427|i428|i429|i43|i50|p290)",re.IGNORECASE)
+    #cardiac arrhythmias DC
+    ELXi1002=re.compile("\^+(?:i441|i442|i443|i456|i459|i47|i48|i49|r000|r001|r008|t821|z450|z950)",re.IGNORECASE)
+    #valvular disease DCßß
+    ELXi1003=re.compile("\^+(?:a520|i05|i06|i07|i08|i091|i098|i34|i35|i36|i37|i38|i39|q230|q231|q232|q233|z952|z953|z954)",re.IGNORECASE)
+    #pulmonary circulation disorders DC
+    ELXi1004=re.compile("\^+(?:i26|i27|i280|i288|i289)",re.IGNORECASE)
+    #peripheral vascular disorders DC
+    ELXi1005=re.compile("\^+(?:i70|i71|i731|i738|i739|i771|i790|i792|k551|k558|k559|z958|z959)",re.IGNORECASE)
+    #hypertension, incopmplicated DC
+    ELXi1006=re.compile("\^+(?:i10)",re.IGNORECASE)
+    #hypertension, complicated DC
+    ELXi1007=re.compile("\^+(?:i11|i12|i13|i15)",re.IGNORECASE)
+    #paralysis DC
+    ELXi1008=re.compile("\^+(?:g041|g114|g801|g802|g81|g82|g830|g831|g832|g833|g834|g839)",re.IGNORECASE)
+    #other neurological disorders DC
+    ELXi1009=re.compile("\^+(?:g10|g11|g12|g13|g20|g21|g22|g254|g255|g312|g318|g319|g32|g35|g36|g37|g40|g41|g931|g934|r470|r56)",re.IGNORECASE)
+    #chronic pulmonary disease DC
+    ELXi1010=re.compile("\^+(?:i278|i279|j40|j41|j42|j43|j44|j45|j46|j47|j60|j61|j62|j63|j64|j65|j66|j67|j684|j701|j703)",re.IGNORECASE)
+    #diabetes uncomplicated DC
+    ELXi1011=re.compile("\^+(?:e100|e101|e109|e110|e111|e119|e120|e121|e129|e130|e131|e139|e140|e141|e149)",re.IGNORECASE)
+    #diabetes complicated DC
+    ELXi1012=re.compile("\^+(?:e102|e103|e104|e105|e106|e107|e108|e112|e113|e114|e115|e116|e117|e118|e122|e123|e124|e125|e126|e127|e128|e132|e133|e134|e135|e136|e137|e138|e142|e143|e144|e145|e146|e147|e148)",re.IGNORECASE)
+    #hypothyroidism DC
+    ELXi1013=re.compile("\^+(?:E00|E01|e02|e03|e890)",re.IGNORECASE)
+    #renalfailure DC
+    ELXi1014=re.compile("\^+(?:i120|i131|n18|n19|n250|z490|z491|z492|z940|z992)",re.IGNORECASE)
+    #liverdisease DC
+    ELXi1015=re.compile("\^+(?:b18|i85|i864|i982|k70|k711|k713|k714|k715|k717|k72|k73|k74|k760|k762|k763|k764|k765|k766|k767|k768|k769|z944)",re.IGNORECASE)
+    #peptic ulcer disease excluding bleeding DC
+    ELXi1016=re.compile("\^+(?:k257|k259|k267|k269|k277|k279|k287|k289)",re.IGNORECASE)
+    #HIV Aids DC
+    ELXi1017=re.compile("\^+(?:b20|b21|b22|b24)",re.IGNORECASE)
+    #lymphoma DC
+    ELXi1018=re.compile("\^+(?:c81|c82|c83|c84|c85|c88|c96|c900|c902)",re.IGNORECASE)
+    #metastatic cancer DC
+    ELXi1019=re.compile("\^+(?:C77|c78|c79|c80)",re.IGNORECASE)
+    #solid tumor without metastasis DC
+    ELXi1020=re.compile("\^+(?:c0|c1|c20|c21|c22|c23|c24|c25|c26|c30|c31|c32|c33|c34|c37|c38|c39|c40|c41|c43|c45|c46|c47|c48|c49|c50|c51|c52|c53|c54|c55|c56|c57|c58|c6|c70|c71|c72|c73|c74|c75|c76|c97)",re.IGNORECASE)
+    #rheumatoid arthritis / collagen vascular diseases DC
+    ELXi1021=re.compile("\^+(?:L940|L941|L943|mo5|m06|m08|m120|m123|m30|m310|m311|m312|m313|m32|m33|m34|m35|m45|m461|m468|m469)",re.IGNORECASE)
+    #coagulopathy DC
+    ELXi1022=re.compile("\^+(?:d65|d66|d67|d68|d691|d693|d694|d695|d696)",re.IGNORECASE)
+    #obesity DC
+    ELXi1023=re.compile("\^+(?:e66)",re.IGNORECASE)
+    #weight loss DC
+    ELXi1024=re.compile("\^+(?:e40|e41|e42|e43|e44|e45|e46|r634|r64)",re.IGNORECASE)
+    #fluid and electrolyte disorders DC
+    ELXi1025=re.compile("\^+(?:e222|e86|e87)",re.IGNORECASE)
+    #blood loss anemia DC
+    ELXi1026=re.compile("\^+(?:d500)",re.IGNORECASE)
+    #deficiency anemia DC
+    ELXi1027=re.compile("\^+(?:d508|d509|d51|d52|d53)",re.IGNORECASE)
+    #alcohol abuse DC
+    ELXi1028=re.compile("\^+(?:f10|e52|g621|i426|k292|k700|k703|k709|t51|z502|z714|z721)",re.IGNORECASE)
+    #drug abuse DC
+    ELXi1029=re.compile("\^+(?:f11|f12|f13|f14|f15|f16|f18|f19|z715|z722)",re.IGNORECASE)
+    #psychoses DC
+    ELXi1030=re.compile("\^+(?:f20|f22|f23|f24|f25|f28|f29|f302|f312|f315)",re.IGNORECASE)
+    #depression DC
+    ELXi1031=re.compile("\^+(?:f204|f313|f314|f315|f32|f33|f341|f412|f432)",re.IGNORECASE)
