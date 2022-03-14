@@ -99,7 +99,7 @@ Step 1
 
 Step 2
     I need to identify all patients with the implant codes starting June 1st 2013 - March 31st 2016. (Dev02)
-    So.. They identified 1451 patients. I identify 417. Welp. 
+    So.. They identified 1451 patients. I identify 417. 
 
 Step 3
     Find their HF Cohort.
@@ -113,3 +113,5 @@ I have 13, and 14 just fine.
 I have 16 too.
 I need to re-do 15 to account for ICD9 and ICD10.
 This means I need new regex for 15. 
+
+At this point, all of the supplementary PQI tables have been created. So, now it's time to create the final data tables. (dev03)

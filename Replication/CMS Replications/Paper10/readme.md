@@ -200,3 +200,4 @@ Coplicates and stuff  came from diagnosistic and procedure codes (done)
 LOS comes from admi / through dates
 Date of death comes from date or death
 readmission comes from that table 
+
